@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Potensi Desa - DESA MULYAMEKAR</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Sama seperti file sebelumnya, saya akan singkatkan CSS-nya */
+        :root {
+            --primary-blue: #0066ff;
+            --secondary-blue: #0044cc;
+            --accent-blue: #3399ff;
+            --dark-blue: #003399;
+            --cyber-blue: #00ccff;
+            --neon-blue: #00f7ff;
+            --dark-bg: #0a0a0a;
+            --darker-bg: #050505;
+            --card-bg: rgba(0, 20, 40, 0.85);
+            --text-light: #f0f0f0;
+            --text-dim: #aaa;
+            --glow-blue: 0 0 30px rgba(0, 102, 255, 0.6);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Rajdhani', 'Poppins', sans-serif;
+        }
+
+        body {
+            background: 
+                radial-gradient(circle at 20% 30%, var(--dark-blue) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, #001133 0%, transparent 50%),
+                linear-gradient(180deg, #000000 0%, #0a0a0a 100%);
+            min-height: 100vh;
+            padding: 10px;
+            color: var(--text-light);
+        }
+
+        .main-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* HEADER */
+        .page-header {
+            text-align: center;
+            margin: 60px 0 40px;
+        }
+
+        .page-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            background: linear-gradient(45deg, #fff, var(--primary-blue), var(--cyber-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        /* POTENSI CARDS */
+        .potensi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .potensi-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(0, 102, 255, 0.2);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .potensi-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary-blue);
+            box-shadow: var(--glow-blue);
+        }
+
+        .potensi-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .potensi-content {
+            padding: 20px;
+        }
+
+        .potensi-category {
+            background: rgba(0, 102, 255, 0.2);
+            color: var(--cyber-blue);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .potensi-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            color: var(--cyber-blue);
+            margin-bottom: 10px;
+        }
+
+        /* BUTTONS */
+        .btn-primary {
+            display: inline-block;
+            background: var(--primary-blue);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary-blue);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,102,255,0.4);
+        }
+
+        /* SIDEBAR (sama seperti file sebelumnya) */
+        .burger-menu {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+        }
+
+        .burger-line {
+            width: 30px;
+            height: 3px;
+            background: var(--primary-blue);
+            margin: 3px 0;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .anime-sidebar {
+            position: fixed;
+            top: 0;
+            left: -320px;
+            width: 300px;
+            height: 100%;
+            background: linear-gradient(180deg, 
+                rgba(0, 10, 20, 0.95) 0%,
+                rgba(0, 20, 40, 0.98) 100%);
+            z-index: 999;
+            transition: all 0.5s ease;
+            padding: 80px 20px 20px;
+        }
+
+        .anime-sidebar.active {
+            left: 0;
+        }
+
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 998;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+</head>
+<body>
+    <!-- SIDEBAR & NAVIGATION SAMA SEPERTI FILE SEBELUMNYA -->
+    <div class="burger-menu" onclick="toggleSidebar()">
+        <div class="burger-line"></div>
+        <div class="burger-line"></div>
+        <div class="burger-line"></div>
+    </div>
+
+    <div class="anime-sidebar" id="animeSidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-title">DESA MULYAMEKAR</div>
+            <div class="sidebar-subtitle">Portal Gen Z v2.0</div>
+        </div>
+
+        <div class="sidebar-menu">
+            <a href="home.html" class="menu-item">
+                <i class="fas fa-home"></i> Home
+            </a>
+            <a href="kegiatan.html" class="menu-item">
+                <i class="fas fa-calendar-alt"></i> Kegiatan
+            </a>
+            <a href="anggota.html" class="menu-item">
+                <i class="fas fa-users"></i> Anggota
+            </a>
+            <a href="galeri.html" class="menu-item">
+                <i class="fas fa-images"></i> Galeri
+            </a>
+            <a href="potensi.html" class="menu-item active">
+                <i class="fas fa-chart-line"></i> Potensi
+            </a>
+        </div>
+    </div>
+
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+    <div class="main-container">
+        <header class="page-header">
+            <h1 class="page-title">POTENSI DESA</h1>
+            <p>Ekonomi, Wisata & Budaya Desa Mulyamekar</p>
+        </header>
+
+        <div class="potensi-grid">
+            <div class="potensi-card">
+                <img src="https://images.unsplash.com/photo-1586771107445-d3ca888129fe?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                     alt="Pertanian" class="potensi-img">
+                <div class="potensi-content">
+                    <span class="potensi-category">Pertanian</span>
+                    <h3 class="potensi-title">Padi Organik</h3>
+                    <p>Hasil pertanian padi organik dengan kualitas terbaik yang menjadi produk unggulan desa.</p>
+                </div>
+            </div>
+
+            <div class="potensi-card">
+                <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                     alt="UMKM" class="potensi-img">
+                <div class="potensi-content">
+                    <span class="potensi-category">UMKM</span>
+                    <h3 class="potensi-title">Kerajinan Bambu</h3>
+                    <p>Produk kerajinan tangan dari bambu yang telah diekspor ke berbagai daerah.</p>
+                </div>
+            </div>
+
+            <div class="potensi-card">
+                <img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                     alt="Wisata" class="potensi-img">
+                <div class="potensi-content">
+                    <span class="potensi-category">Wisata</span>
+                    <h3 class="potensi-title">Air Terjun</h3>
+                    <p>Destinasi wisata alam air terjun dengan pemandangan yang memukau.</p>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin: 50px 0;">
+            <a href="home.html" class="btn-primary">
+                <i class="fas fa-arrow-left"></i> Kembali ke Beranda
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('animeSidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
